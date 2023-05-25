@@ -24,15 +24,16 @@ function InputForm() {
     }
   
     return (
-      <form onSubmit={handleSubmit}>
+      <form className="form-container" onSubmit={handleSubmit}>
         <label>Enter text here:
           <textarea
+            className="form-input"
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             />
         </label>
-        <input type="submit" />
+        <input className="submit-button" type="submit" />
       </form>
     )
   }
