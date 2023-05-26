@@ -1,20 +1,23 @@
-import {useEffect, useState} from 'react';
-import soundFile from 'C:/Users/alexa/projects/faang_core_values/client/src/YourAudioFile.wav';
+import {useEffect, useState, useRef} from 'react';
 
-function AudioPlayer() {
-    const [audio] = useState(new Audio(soundFile));
+function AudioPlayer({ src }) {
     const [playing, setPlaying] = useState(false);
-
-    const toggle = () => setPlaying(!playing);
+    const audioRef = useRef();
 
     useEffect(() => {
-        playing ? audio.play() : audio.pause();
+        if (playing) {
+            audioRef.current.play();
+        } else {
+            audioRef.current.pause();
+        }
     },
     [playing]);
 
     return (
         <div>
-            <button onClick={toggle}>{playing ? "Pause" : "Play"}</button>
+            <audio ref={audioRef} controls>
+                <source src={src} type="audio/mpeg" />
+            </audio>
         </div>
     );
 }

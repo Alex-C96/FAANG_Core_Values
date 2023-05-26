@@ -1,39 +1,23 @@
 import { useState } from 'react';
 
-function InputForm() {
+function InputForm({ onFormSubmit }) {
     const [input, setInput] = useState("");
   
     const handleSubmit = (event) => {
       event.preventDefault();
-        console.log(input);
-        fetch('http://localhost:3001/submit-form', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-              data: input
-          }),
-        })
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch((error) => {
-        console.error('Error:', error);
-        });
-  
+      onFormSubmit(input)
     }
   
     return (
       <form className="form-container" onSubmit={handleSubmit}>
-        <label>Enter text here:
-          <textarea
-            className="form-input"
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            />
-        </label>
-        <input className="submit-button" type="submit" />
+        <textarea
+          className="form-input textbox"
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder='Add text here...'
+          />
+        <button className="button-64" type="submit"><span className="text">Submit</span></button>
       </form>
     )
   }
