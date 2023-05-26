@@ -34,5 +34,4 @@ function processAudio(audioFile, text, voiceName = "en-US-RogerNeural") {
     console.log("Now synthesizing to: " + audioFile);
 }
 
-// usage
-//processAudio("YourAudioFile.wav", "Your text goes here", "en-US-RogerNeural");
+module.exports.processAudio = processAudio;
