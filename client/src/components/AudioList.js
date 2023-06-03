@@ -7,7 +7,6 @@ function AudioList({audios}) {
             {audios.map((audio) => (
             <div className="audio-element" key={audio.id}>
                 <AudioPlayer src={audio.src} />
-                <a href={audio.src}>Download audio</a>
             </div>
             ))}
         </div>
