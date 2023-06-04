@@ -62,6 +62,7 @@ body {
 .row {
   display: flex;
   flex-direction: column;
+  margin: 1rem;
 }
 
 *::selection {
@@ -101,8 +102,9 @@ textarea:focus {
   flex: 2;
   overflow-y: auto;
   height: 500x;
-  width: 32rem;
+  width: 29rem;
   margin-left: 10px;
+  margin-right: 10px;
   display: flex;
   flex-direction: column;
 }
@@ -132,7 +134,7 @@ textarea:focus {
   width: 700px;
   height: 400px;
   border-radius: 5px;
-  margin: 1rem;
+  margin: 0 1rem 1rem;
   background-color: var(--base-01);
   caret-color: #E3F165;
   color: white;
