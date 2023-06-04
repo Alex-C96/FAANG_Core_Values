@@ -9,15 +9,19 @@ function InputForm({ onFormSubmit }) {
     }
   
     return (
-      <form className="form-container" onSubmit={handleSubmit}>
-        <textarea
-          className="form-input textbox"
-          type="text"
+      <form className="card bg-base-100 shadow-xl" onSubmit={handleSubmit}>
+        <div className="card-body">
+          <textarea
+          className="textarea textarea-bordered textarea-primary"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder='Add text here...'
           />
-        <button className="submit-button" type="submit"><span className="text">Submit</span></button>
+          <div className="justify-end card-actions">
+            <button className="btn btn-primary" type="submit">Submit</button>
+          </div>
+        </div>
+        
       </form>
     )
   }

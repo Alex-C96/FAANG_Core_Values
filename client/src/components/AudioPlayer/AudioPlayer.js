@@ -58,14 +58,16 @@ export default function AudioPlayer({ src }) {
     }, []);
 
     return (
-        <div className="audio-player-container" id="audio-player-container">
-            <audio ref={audioRef} src={src} preload="metadata" />
-            <button className="play-icon" onClick={togglePlayPause}>
-                <Lottie lottieRef={playDefaultLottieRef} animationData={playAnimationData} loop={false} autoplay={false} />
-            </button>
-            <div className="time" id="current-time">{calculateTime(currentTime)}</div>
-            <input type="range" className="seek-slider" max={duration} value={currentTime} onChange={(e) => setCurrentTime(e.target.value)} />
-            <div className="time" id="duration">{calculateTime(duration)}</div>
+        <div className="card w-96 bg-base-100 shadow-xl">
+            <div className="card-body flex flex-row">
+                <audio ref={audioRef} src={src} preload="metadata" />
+                <button className="play-icon basis-1/4" onClick={togglePlayPause}>
+                    <Lottie lottieRef={playDefaultLottieRef} animationData={playAnimationData} loop={false} autoplay={false} />
+                </button>
+                <div className="time basis-1/4" id="current-time">{calculateTime(currentTime)}</div>
+                <input type="range" className="range basis-1/2" max={duration} value={currentTime} onChange={(e) => setCurrentTime(e.target.value)} />
+                <div className="time basis-1/4" id="duration">{calculateTime(duration)}</div>
+            </div>
         </div>
     );
 }

@@ -5,10 +5,10 @@ import AudioApp from './components/AudioApp';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Text to Speech Translator</h1>
-        <AudioApp/>
-      </header>
+      <div className="navbar bg-base-300">
+        <a className="btn btn-ghost normal-case text-xl">Text to Speech Translator</a>
+      </div>
+      <AudioApp/>
     </div>
   );
 }
