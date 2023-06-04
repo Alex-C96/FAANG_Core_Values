@@ -17,7 +17,7 @@ function InputForm({ onFormSubmit }) {
           onChange={(e) => setInput(e.target.value)}
           placeholder='Add text here...'
           />
-        <button className="button-64" type="submit"><span className="text">Submit</span></button>
+        <button className="submit-button" type="submit"><span className="text">Submit</span></button>
       </form>
     )
   }
