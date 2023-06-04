@@ -1,4 +1,5 @@
 require('dotenv').config()
+const { processAudio } = require('./processAudio');
 const express = require("express");
 const app = express();
 const cors = require('cors');
