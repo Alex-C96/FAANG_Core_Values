@@ -37,9 +37,13 @@ function AudioApp() {
     };
 
     return (
-        <div>
-            <InputForm onFormSubmit={handleFormSubmit} />
-            <AudioList audios={audios} />
+        <div className="container">
+            <div className="row">
+                <InputForm onFormSubmit={handleFormSubmit} />
+            </div>
+            <div className="row">
+                <AudioList audios={audios} />
+            </div>         
         </div>
     );
 }

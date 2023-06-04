@@ -1,4 +1,4 @@
-import AudioPlayer from "./AudioPlayer";
+import AudioPlayer from "./AudioPlayer/AudioPlayer";
 
 function AudioList({audios}) {
 
