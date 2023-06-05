@@ -9,7 +9,7 @@ function InputForm({ onFormSubmit }) {
     }
   
     return (
-      <form className="card bg-base-100 shadow-xl" onSubmit={handleSubmit}>
+      <form className="card bg-primary shadow-xl" onSubmit={handleSubmit}>
         <div className="card-body">
           <textarea
           className="textarea textarea-bordered textarea-primary"
@@ -18,7 +18,7 @@ function InputForm({ onFormSubmit }) {
           placeholder='Add text here...'
           />
           <div className="justify-end card-actions">
-            <button className="btn btn-primary" type="submit">Submit</button>
+            <button className="btn btn-accent" type="submit">Submit</button>
           </div>
         </div>
         

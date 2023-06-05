@@ -5,7 +5,7 @@ import AudioApp from './components/AudioApp';
 function App() {
   return (
     <div className="App">
-      <div className="navbar bg-base-300">
+      <div className="navbar bg-secondary">
         <a className="btn btn-ghost normal-case text-xl">Text to Speech Translator</a>
       </div>
       <AudioApp/>
