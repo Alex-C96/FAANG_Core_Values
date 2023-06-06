@@ -5,6 +5,7 @@ import PauseIcon from './PauseIcon';
 
 export default function AudioPlayer({ src }) {
     const audioRef = useRef();
+    const checkboxRef = useRef();
     const [playing, setPlaying] = useState(false);
     const [duration, setDuration] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
@@ -35,6 +36,7 @@ export default function AudioPlayer({ src }) {
 
     const handleEnded = () => {
         setPlaying(false);
+        checkboxRef.current.checked = false;
     }
 
     const handleMouseDown = () => {
@@ -73,12 +75,12 @@ export default function AudioPlayer({ src }) {
             <div className="card-body flex flex-row">
                 <audio ref={audioRef} src={src} preload="metadata" />
                 <label className="basis-1/4 swap swap-rotate" >
-                    <input type="checkbox" onClick={togglePlayPause}/>
+                    <input ref={checkboxRef} type="checkbox" onClick={togglePlayPause}/>
                     <PlayIcon />
                     <PauseIcon />
                 </label>
                 <div className="time basis-1/4" id="current-time">{calculateTime(currentTime)}</div>
-                <input type="range" className="range range-primary basis-1/2" min={0} max={duration} value={currentTime} onChange={handleChange} onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} />
+                <input type="range" className="range range-secondary basis-1/2" min={0} max={Math.floor(duration)} value={Math.floor(currentTime)} onChange={handleChange} onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} />
                 <div className="time basis-1/4" id="duration">{calculateTime(duration)}</div>
             </div>
         </div>
