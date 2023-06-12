@@ -4,7 +4,12 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'display': ['Bubblegum Sans'],
+        'body': ['Bubblegum Sans'],
+      },
+    },
   },
   plugins: [
     require('daisyui'),
@@ -13,4 +18,3 @@ module.exports = {
     themes: ['cupcake'],
   },
 }
-

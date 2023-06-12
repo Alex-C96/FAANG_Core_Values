@@ -9,10 +9,10 @@ function InputForm({ onFormSubmit }) {
     }
   
     return (
-      <form className="card bg-primary shadow-xl" onSubmit={handleSubmit}>
+      <form className="card bg-primary shadow-xl h-96" onSubmit={handleSubmit}>
         <div className="card-body">
           <textarea
-          className="textarea textarea-bordered textarea-primary"
+          className="textarea textarea-bordered textarea-primary h-full mb-3"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder='Add text here...'
