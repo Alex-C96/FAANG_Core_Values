@@ -4,14 +4,11 @@ import PlayIcon from './PlayIcon';
 import PauseIcon from './PauseIcon';
 
 export default function AudioPlayer({ src }) {
-
-    const [trackProgress, setTrackProgress] = useState(0);
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [trackDuration, setTrackDuration] = useState(0);
-
-    const audioRef = useRef(null);
-    const intervalRef = useRef();
-    const isReady = useRef(false);
+    const audioRef = useRef();
+    const checkboxRef = useRef();
+    const [playing, setPlaying] = useState(false);
+    const [duration, setDuration] = useState(0);
+    const [currentTime, setCurrentTime] = useState(0);
 
     const calculateTime = (secs) => {
         const minutes = Math.floor(secs / 60);
@@ -23,6 +20,33 @@ export default function AudioPlayer({ src }) {
     const onPlayPauseClick = () => {
         setIsPlaying(!isPlaying);
     }
+
+    const handleLoadData = () => {
+        setDuration(audioRef.current.duration);
+    }
+
+    const handleEnded = () => {
+        setPlaying(false);
+        checkboxRef.current.checked = false;
+    }
+
+    const handleMouseDown = () => {
+        if (playing) {
+            audioRef.current.pause();
+        }
+    };
+
+    const handleMouseUp = () => {
+        if (playing) {
+            audioRef.current.play();
+        }
+    }
+
+    const handleChange = (e) => {
+        const newTime = e.target.value;
+        setCurrentTime(newTime);
+        audioRef.current.currentTime = newTime;
+    };
 
     useEffect(() => {
         audioRef.current = new Audio(src);
@@ -88,23 +112,13 @@ export default function AudioPlayer({ src }) {
             <div className="card-body flex flex-row">
                 <audio ref={audioRef} src={src} preload="metadata" />
                 <label className="basis-1/4 swap swap-rotate" >
-                    <input type="checkbox" onClick={() => onPlayPauseClick()}/>
+                    <input ref={checkboxRef} type="checkbox" onClick={togglePlayPause}/>
                     <PlayIcon />
                     <PauseIcon />
                 </label>
-                <div className="time basis-1/4" id="current-time">{calculateTime(trackDuration)}</div>
-                <input 
-                    type="range" 
-                    className="range range-accent basis-1/2"
-                    step="1" 
-                    min="0"
-                    max={trackDuration || 0} 
-                    value={trackProgress} 
-                    onChange={(e) => onScrub(e.target.value)} 
-                    onKeyUp={onScrubEnd} 
-                    onMouseUp={onScrubEnd} 
-                />
-                <div className="time basis-1/4" id="duration">{calculateTime(trackDuration)}</div>
+                <div className="time basis-1/4" id="current-time">{calculateTime(currentTime)}</div>
+                <input type="range" className="range range-secondary basis-1/2" min={0} max={Math.floor(duration)} value={Math.floor(currentTime)} onChange={handleChange} onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} />
+                <div className="time basis-1/4" id="duration">{calculateTime(duration)}</div>
             </div>
         </div>
     );

@@ -37,7 +37,7 @@ function AudioApp() {
     };
 
     return (
-        <div className="flex flex-row">
+        <div className="flex flex-col sm:flex-row">
             <div className="basis-1/2 px-8 py-8 mt-8">
                 <InputForm onFormSubmit={handleFormSubmit} />
             </div>
