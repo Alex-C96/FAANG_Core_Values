@@ -25,7 +25,7 @@ fs.readdir(publicDirectoryPath, (err, files) => {
 })
 
 app.post('/submit-form', async function(req, res) {
-  const  text  = req.body.data;
+  const text = req.body.data;
   audioNumber += 1;
   const filePath = path.join(__dirname, 'public', `audioFile${audioNumber}.wav`);
 
@@ -48,7 +48,6 @@ app.get('/audios', function(req, res) {
     } else {
       const wavFiles = files.filter(file => file.endsWith('.wav'));
       const audios = wavFiles.map((file, index) => {
-        console.log('test', file);
         return {
           id: index + 1,
           src: `http://localhost:3001/public/${file}`,

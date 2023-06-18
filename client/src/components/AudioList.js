@@ -12,8 +12,8 @@ function AudioList({audios, fetchFiles}) {
         })
         .then((res) => {
             if (res.ok) {
-                fetchFiles();
                 console.log(res.text());
+                fetchFiles();
             } else {
                 console.log("failed to delete file");
             }

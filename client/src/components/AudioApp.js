@@ -32,7 +32,7 @@ function AudioApp() {
         .then(data => {
           const audioFile = data.audioFile;
           const url = `http://localhost:3001/public/${audioFile}`;
-          const newAudio = { id: audios.length + 1, src: url, text: input };
+          const newAudio = { id: audios.length + 1, src: url, filename: audioFile };
           setAudios([...audios, newAudio]);
         })
         .catch((error) => {
