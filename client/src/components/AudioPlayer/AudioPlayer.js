@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import './AudioPlayer.css';
 import PlayIcon from './PlayIcon';
 import PauseIcon from './PauseIcon';
+import DeleteButton from './DeleteButton';
 
-export default function AudioPlayer({ src }) {
+export default function AudioPlayer({ src, onDelete }) {
     const audioRef = useRef();
     const checkboxRef = useRef();
     const [playing, setPlaying] = useState(false);
@@ -17,8 +18,17 @@ export default function AudioPlayer({ src }) {
         return `${minutes}:${returnedSeconds}`;
     };
 
-    const onPlayPauseClick = () => {
-        setIsPlaying(!isPlaying);
+    const togglePlayPause = () => {
+        if (playing) {
+            audioRef.current.pause();
+        } else {
+            audioRef.current.play();
+        }
+        setPlaying(!playing);
+    };
+
+    const handleTimeUpdate = () => {
+        setCurrentTime(audioRef.current.currentTime);
     }
 
     const handleLoadData = () => {
@@ -49,63 +59,17 @@ export default function AudioPlayer({ src }) {
     };
 
     useEffect(() => {
-        audioRef.current = new Audio(src);
-    }, [src]);
+        const audio = audioRef.current;
+        audio.addEventListener('timeupdate', handleTimeUpdate);
+        audio.addEventListener('loadeddata', handleLoadData);
+        audio.addEventListener('ended', handleEnded);
 
-    useEffect(() => {
-        audioRef.current.addEventListener('loadedmetadata', () => {
-            setTrackDuration(audioRef.current.duration);
-        });
-    }, []);
-
-    useEffect(() => {
-        if (isPlaying) {
-          console.log("Attempting to play audio...");
-          audioRef.current.play().then(() => {
-            console.log("Audio is playing!");
-          }).catch(error => {
-            console.error("Error playing audio: ", error);
-          });
-          startTimer();
-        } else {
-          console.log("Pausing audio...");
-          clearInterval(intervalRef.current);
-          audioRef.current.pause();
-        }
-      }, [isPlaying]);
-
-    useEffect(() => {
         return () => {
-            audioRef.current.pause();
-            clearInterval(intervalRef.current);
+            audio.removeEventListener('timeupdate', handleTimeUpdate);
+            audio.removeEventListener('loadeddata', handleLoadData);
+            audio.removeEventListener('ended', handleEnded);
         }
-    })
-
-    const startTimer = () => {
-        clearInterval(intervalRef.current);
-
-        intervalRef.current = setInterval(() => {
-            if (audioRef.current.ended) {
-            } else {
-                setTrackProgress(audioRef.current.currentTime);
-            }
-        }, 100);
-    }
-
-    const onScrub = (value) => {
-        // Clear any timers already running
-      clearInterval(intervalRef.current);
-      audioRef.current.currentTime = value;
-      setTrackProgress(audioRef.current.currentTime);
-    }
-    
-    const onScrubEnd = () => {
-      // If not already playing, start
-      if (!isPlaying) {
-        setIsPlaying(true);
-      }
-      startTimer();
-    }
+    }, []);
 
     return (
         <div className="card w-96 bg-primary mb-5 shadow-xl">
@@ -117,8 +81,9 @@ export default function AudioPlayer({ src }) {
                     <PauseIcon />
                 </label>
                 <div className="time basis-1/4" id="current-time">{calculateTime(currentTime)}</div>
-                <input type="range" className="range range-secondary basis-1/2" min={0} max={Math.floor(duration)} value={Math.floor(currentTime)} onChange={handleChange} onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} />
+                <input type="range" className="range range-secondary basis-1/2" min={0} max={Math.ceil(duration)} value={Math.ceil(currentTime)} onChange={handleChange} onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} />
                 <div className="time basis-1/4" id="duration">{calculateTime(duration)}</div>
+                <DeleteButton onDelete={onDelete}/>
             </div>
         </div>
     );

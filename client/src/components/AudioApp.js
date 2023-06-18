@@ -5,13 +5,17 @@ import AudioList from './AudioList';
 function AudioApp() {
     const [audios, setAudios] = useState([]);
 
-    useEffect(() => {
+    const fetchFiles = () => {
         fetch('http://localhost:3001/audios')
-            .then(response => response.json())
-            .then(data => setAudios(data))
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+        .then(response => response.json())
+        .then(data => setAudios(data))
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+
+    useEffect(() => {
+        fetchFiles();
     }, []);
     
     const handleFormSubmit = (input) => {
@@ -42,7 +46,7 @@ function AudioApp() {
                 <InputForm onFormSubmit={handleFormSubmit} />
             </div>
             <div className="basis-1/2 px-8 py-8 mt-8">
-                <AudioList audios={audios} />
+                <AudioList audios={audios} fetchFiles={fetchFiles}/>
             </div>         
         </div>
     );

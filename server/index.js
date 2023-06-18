@@ -3,7 +3,8 @@ const processAudio = require('./processAudio');
 const express = require("express");
 const app = express();
 const cors = require('cors');
-const fs = require('fs');
+const fsp = require('fs').promises;
+const fs = require('fs')
 const path = require('path');
 
 app.use(cors());
@@ -47,16 +48,32 @@ app.get('/audios', function(req, res) {
     } else {
       const wavFiles = files.filter(file => file.endsWith('.wav'));
       const audios = wavFiles.map((file, index) => {
+        console.log('test', file);
         return {
           id: index + 1,
-          src: `http://localhost:3001/public/${file}`
+          src: `http://localhost:3001/public/${file}`,
+          filename: file,
         };
       });
       res.json(audios);
     }
-  })
-})
+  });
+});
+
+app.delete('/deletefile', async (req, res) => {
+  let fileName = req.body.filename;
+  let filePath = `./public/${fileName}`;
+
+  try {
+    await fsp.unlink(filePath);
+    console.log('File deleted successfully');
+    res.status(200).send('File deleted successfully');
+  } catch (err) {
+    console.error('An error occurred:', err);
+    res.status(500).send("There was a problem deleting the file.");
+  }
+});
 
 app.listen(3001, function() {
   console.log('Server is running on http://localhost:3001');
-})
+});
